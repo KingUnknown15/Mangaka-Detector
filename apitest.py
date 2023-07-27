@@ -1,4 +1,3 @@
-from username import username, email, password
 import requests
 from datetime import datetime
 
