@@ -1,21 +1,33 @@
 import requests
 import os
 
+
 web_url = "https://api.mangadex.org"
-author = "EIICHIRO ODA"
-id = "a1c7c817-4e59-43b7-9365-09675a149a6f"
-language = "pt-br"
+
+#PARAMETER SETTINGS
+
+#Author for download path
+author = "TITE KUBO"
+
+#Manga ID and Settings for request
+id = "239d6260-d71f-43b0-afff-074e3619e3de"
+language = "en"
 group = "4f1de6a2-f0c5-4ac5-bce5-02c7dbb67deb"
 
+#Download Path
 data_path = f"Dataset/{author}"
 
+#Request for Manga Feed
 r = requests.get(f"{web_url}/manga/{id}/feed",
                  params={"translatedLanguage[]": language, "excludedGroups[]": group})
 
+#Taking Manga ID from API Response
 test = [chapter["id"] for chapter in r.json()["data"]]
-print(type(test[0]))
 
-y = 0
+
+y = 0 #For enumerating the pages
+
+#Requesting Chapters and Downloading Chapters
 for chapter in test[:20]:
     x = requests.get(f"{web_url}/at-home/server/{chapter}")
     x_json = x.json()
